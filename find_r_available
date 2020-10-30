@@ -1,0 +1,16 @@
+#!/usr/bin/sh
+echo "listing local and root R packages by their R-names"
+/home/japhir/bin/find_r_dups
+
+echo "converting ~/R/x86_64-pc-linux-gnu-library packages into r-pkg equivalents"
+sed 's/^/r-/' /tmp/rlocalpkg.txt | tr '[:upper:]' '[:lower:]' | sort > /tmp/r-rlocalpkg.txt
+
+echo "listing all available r packages in the AUR"
+paru -Slq "aur" | grep "^r-" | sort > /tmp/r-remotepkg.txt
+
+echo "comparing locally installed packages to remotely available packages"
+comm -12 '/tmp/r-rlocalpkg.txt' '/tmp/r-remotepkg.txt' > /tmp/r-aur-to-install
+
+echo "running AUR helper command with newly listed packages"
+# or use yay in stead of paru
+cat /tmp/r-aur-to-install | paru -Syu --needed -

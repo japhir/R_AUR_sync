@@ -1,0 +1,16 @@
+#+title: Scripts for managing local and root level R packages
+#+author: Ilja Kocken
+
+I use [[https://archlinux.org][Arch Linux]] and [[https://www.r-project.org/about.html][R]]. Recently, many R packages have been made available on the [[aur.archlinux.org/][AUR]], which means that my linux package manager can take care of upgrading packages, and that I don't have to do so myself from within R.
+
+Unfortunately, this made a bit of a mess, resulting in some packages installed into ~/usr/lib/R/~---also by me using R as root (bad!)---and most others into ~/R/x86_64-pc-linux-gnu-library~. I'd prefer to have all the available packages loaded from the AUR, and installed in the root directory. There are some niche or development packages for which an AUR package doesn't make a lot of sense, those will remain installed in my user directory.
+
+So I wrote some scripts to help manage the whole jumble. If you want to use them, put them in your ~$PATH~ (I put them in ~~/bin~) and run ~find_r_available~.
+
+| script                | function                                                                                                       |
+|-----------------------+----------------------------------------------------------------------------------------------------------------|
+| [[file:find_r_available]] | finds locally installed R packages and tries find them in the AUR, then installs them using my AUR helper ~paru~ |
+| [[file:find_r_dups]]      | finds R packages that have been installed in both ~~/R/x86_64-pc-linux-gnu-library~ and ~/usr/lib/R~               |
+| [[file:remove_r_local]]   | remove all duplicated packages from ~~/R~                                                                        |
+
+If you're not using the same [[https://wiki.archlinux.org/index.php/AUR_helpers][AUR helper]] that I'm using, [[https://github.com/morganamilo/paru][paru]], then make sure to change the last line in ~find_r_available~.

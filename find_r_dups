@@ -1,0 +1,4 @@
+#!/usr/bin/sh
+ls /home/japhir/R/x86_64-pc-linux-gnu-library/ | sort > /tmp/rlocalpkg.txt
+ls /usr/lib/R/library/ | sort > /tmp/rglobalpkg.txt
+comm -12 '/tmp/rlocalpkg.txt' '/tmp/rglobalpkg.txt'

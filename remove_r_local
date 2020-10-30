@@ -1,0 +1,8 @@
+#!/usr/bin/sh
+# create a new file with a first line
+echo "remove.packages(lib = \"~/R/x86_64-pc-linux-gnu-library/\", c(" > /tmp/remove-r-pkgs
+# add all the packages, in ", with commas, no newlines, no final comma
+/home/japhir/bin/find_r_dups | sed 's/^/"/' | sed 's/$/", /' | sed '$s/,//' | tr -d '\n' >> /tmp/remove-r-pkgs
+# finish with correct closing brackets
+echo "))" >> /tmp/remove-r-pkgs
+cat /tmp/remove-r-pkgs | R --slave
